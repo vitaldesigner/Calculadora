@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cálculo de Preço Justo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        input, button {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 1rem;
+        }
+        .button-group button {
+            width: 30%;
+            margin: 5px;
+            padding: 10px;
+        }
+        .result {
+            margin-top: 20px;
+            background-color: #e2e2e2;
+            padding: 15px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Calculadora de Preço Justo</h2>
+
+        <label for="precoBase">Qual o Preço Base?</label>
+        <input type="number" id="precoBase" step="0.01" placeholder="Digite o preço base (Ex: 100.50)">
+        
+        <label for="tempoGasto">Quanto foi o tempo gasto?</label>
+        <input type="number" id="tempoGasto" step="0.01" placeholder="Digite o tempo gasto (Ex: 5.5)">
+
+        <p>Houve complexidade/dificuldade na hora de fazer o design?</p>
+        <button id="simButton">Sim</button>
+        <button id="naoButton">Não</button>
+
+        <div id="percentGroup" style="display:none;">
+            <p>Escolha a porcentagem de acréscimo:</p>
+            <div class="button-group">
+                <button onclick="calcular(5)">5%</button>
+                <button onclick="calcular(10)">10%</button>
+                <button onclick="calcular(20)">20%</button>
+            </div>
+        </div>
+
+        <div class="result" id="resultado" style="display:none;">
+            <h3>Resultado:</h3>
+            <p id="precoFinal"></p>
+        </div>
+    </div>
+
+    <script>
+        const precoBaseInput = document.getElementById("precoBase");
+        const tempoGastoInput = document.getElementById("tempoGasto");
+        const simButton = document.getElementById("simButton");
+        const naoButton = document.getElementById("naoButton");
+        const percentGroup = document.getElementById("percentGroup");
+        const resultadoDiv = document.getElementById("resultado");
+        const precoFinalP = document.getElementById("precoFinal");
+
+        // Função para quando o usuário clicar em "Sim"
+        simButton.addEventListener("click", function() {
+            percentGroup.style.display = "block";  // Mostra as opções de porcentagem
+        });
+
+        // Função para quando o usuário clicar em "Não"
+        naoButton.addEventListener("click", function() {
+            const precoBase = parseFloat(precoBaseInput.value);
+            const tempoGasto = parseFloat(tempoGastoInput.value);
+            const soma = precoBase * tempoGasto;
+
+            precoFinalP.innerText = `O preço final é: R$ ${soma.toFixed(2)} reais`;
+            resultadoDiv.style.display = "block";  // Mostra o resultado
+            percentGroup.style.display = "none";  // Esconde as opções de porcentagem
+        });
+
+        // Função para calcular o valor com porcentagem
+        function calcular(porcentagem) {
+            const precoBase = parseFloat(precoBaseInput.value);
+            const tempoGasto = parseFloat(tempoGastoInput.value);
+            const soma = precoBase * tempoGasto;
+            const valorFinal = soma + (soma * porcentagem / 100);
+
+            precoFinalP.innerText = `O preço final com ${porcentagem}% de acréscimo é: R$ ${valorFinal.toFixed(2)} reais`;
+            resultadoDiv.style.display = "block";  // Mostra o resultado
+        }
+    </script>
+
+</body>
+</html>
