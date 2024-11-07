@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cálculo de Preço Justo</title>
+    <title>Cálculo de Preço Justo e Comissão</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-color: #e0f7ff;
             padding: 20px;
             max-width: 600px;
             margin: 0 auto;
@@ -18,7 +18,7 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        h2 {
+        h2, h3 {
             text-align: center;
         }
         input, button {
@@ -65,9 +65,25 @@
             </div>
         </div>
 
+        <h3>Comissão de Parceria</h3>
+        <label for="comissao">Escolha a comissão da parceria:</label>
+        <select id="comissao">
+            <option value="5">5%</option>
+            <option value="10">10%</option>
+            <option value="15">15%</option>
+            <option value="20">20%</option>
+        </select>
+
+        <button onclick="calcularComissao()">Calcular Comissão</button>
+
         <div class="result" id="resultado" style="display:none;">
             <h3>Resultado:</h3>
             <p id="precoFinal"></p>
+        </div>
+
+        <div class="result" id="comissaoResultado" style="display:none;">
+            <h3>Comissão do Parceiro:</h3>
+            <p id="comissaoFinal"></p>
         </div>
     </div>
 
@@ -79,6 +95,9 @@
         const percentGroup = document.getElementById("percentGroup");
         const resultadoDiv = document.getElementById("resultado");
         const precoFinalP = document.getElementById("precoFinal");
+        const comissaoSelect = document.getElementById("comissao");
+        const comissaoResultadoDiv = document.getElementById("comissaoResultado");
+        const comissaoFinalP = document.getElementById("comissaoFinal");
 
         // Função para quando o usuário clicar em "Sim"
         simButton.addEventListener("click", function() {
@@ -105,6 +124,18 @@
 
             precoFinalP.innerText = `O preço final com ${porcentagem}% de acréscimo é: R$ ${valorFinal.toFixed(2)} reais`;
             resultadoDiv.style.display = "block";  // Mostra o resultado
+        }
+
+        // Função para calcular a comissão do parceiro
+        function calcularComissao() {
+            const precoBase = parseFloat(precoBaseInput.value);
+            const tempoGasto = parseFloat(tempoGastoInput.value);
+            const porcentagemComissao = parseFloat(comissaoSelect.value);
+            const soma = precoBase * tempoGasto;
+            const valorComissao = soma * (porcentagemComissao / 100);
+
+            comissaoFinalP.innerText = `A comissão para o parceiro é: R$ ${valorComissao.toFixed(2)} reais`;
+            comissaoResultadoDiv.style.display = "block";  // Mostra o valor da comissão
         }
     </script>
 
